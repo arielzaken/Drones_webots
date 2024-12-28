@@ -76,10 +76,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Program Files %28x86%29\Webots\include\controller\c;D:\Program Files %28x86%29\Webots\include\controller\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>D:\Program Files (x86)\Webots\lib\controller;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Controller.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,7 +169,36 @@
     <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Supervisor.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\TouchSensor.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\VacuumGripper.cpp" />
+    <ClCompile Include="algorithm.cpp" />
+    <ClCompile Include="HoverBehavior.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="P3I.cpp" />
+    <ClCompile Include="PID.cpp" />
+    <ClCompile Include="Stabilizer.cpp" />
+    <ClCompile Include="States.cpp" />
+    <ClCompile Include="VelP3I.cpp" />
+    <ClCompile Include="WebotsController.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AltSensor.h" />
+    <ClInclude Include="Behavior_I.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="Controller_I.h" />
+    <ClInclude Include="DistanceSensor.h" />
+    <ClInclude Include="DroneController_I.h" />
+    <ClInclude Include="HoverBehavior.h" />
+    <ClInclude Include="Operator.h" />
+    <ClInclude Include="P3I.h" />
+    <ClInclude Include="PID.h" />
+    <ClInclude Include="Primitives.h" />
+    <ClInclude Include="SensorCashProxy.h" />
+    <ClInclude Include="Sensor_I.h" />
+    <ClInclude Include="Stabilizer.h" />
+    <ClInclude Include="States.h" />
+    <ClInclude Include="VelocitySensor.h" />
+    <ClInclude Include="VelP3I.h" />
+    <ClInclude Include="webotsController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
