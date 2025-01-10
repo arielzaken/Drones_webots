@@ -12,12 +12,16 @@ class Stabilizer
 {
     Behavior_I* behaviors[STABILIZER_NUM_OF_BEHAVIORS];
     uint8_t numOfBehaviors;
-    DroneController_I& droneController;
-    Controller_t& controller;
-    VelocitySensor& velocitySensor;
+    DroneController_I* droneController;
+    Controller_t* controller;
+    VelocitySensor* velocitySensor;
 
     std::thread* task = nullptr;
     
+    volatile bool isRunning = true;
+
+    void stabilizerLoop();
+
     Velocity calcTwist();
 public:
     Stabilizer(

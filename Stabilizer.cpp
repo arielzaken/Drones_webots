@@ -2,19 +2,20 @@
 #include <chrono>
 #include <thread>
 
-void stabilizerLoop(void *arg)
+void Stabilizer::stabilizerLoop()
 {
-    Stabilizer* This = static_cast<Stabilizer*>(arg);
-    Velocity twist = This->calcTwist();
-    for(;;) {
-        Velocity currVel = This->velocitySensor.read();
-        Twist<uint16_t> command = This->controller.update(twist ,currVel);
-        This->droneController.setThrottle(command[Z]);
-        This->droneController.setPitch(command[W]);
-        This->droneController.setYaw(command[Y]);
-        This->droneController.setRoll(command[X]);
-        std::this_thread::sleep_for(std::chrono::milliseconds(4));
+    std::cout << "Stabilizer started!\n";
+    while(isRunning) {
+        Velocity twist = calcTwist();
+        Velocity currVel = velocitySensor->read();
+        Twist<uint16_t> command = controller->update(twist ,currVel);
+        droneController->setThrottle(command[Z]);
+        droneController->setPitch(command[W]);
+        droneController->setYaw(command[Y]);
+        droneController->setRoll(command[X]);
+        //std::this_thread::sleep_for(std::chrono::milliseconds(4));
     }
+    std::cout << "Stabilizer stoped\n";
 }
 
 Velocity Stabilizer::calcTwist()
@@ -32,9 +33,9 @@ Stabilizer::Stabilizer(
     DroneController_I &_droneController,
     Controller_t &_controller,
     VelocitySensor &_velocitySensor) : 
-    droneController(_droneController),
-    controller(_controller),
-    velocitySensor(_velocitySensor)
+    droneController(&_droneController),
+    controller(&_controller),
+    velocitySensor(&_velocitySensor)
 {
     memset(behaviors, 0, sizeof(Behavior_I*) * STABILIZER_NUM_OF_BEHAVIORS);
     numOfBehaviors = 0;
@@ -62,17 +63,19 @@ void Stabilizer::removeBehavior(uint8_t discriptor)
 
 void Stabilizer::begin()
 {
-    if(this->task == nullptr){
+    if(!isRunning && !task){
         this->task = new std::thread(stabilizerLoop, this);
-        std::cout << "Stabilizer started!\n";
+        isRunning = true;
     }
 }
 
 void Stabilizer::end()
 {
-    if(this->task != nullptr){
-        delete this->task;
-        this->task = nullptr;
+    if (isRunning && task) {
+        task->join();
+        delete task;
+        task = nullptr;
+        isRunning = false;
     }
 }
 
