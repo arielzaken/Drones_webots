@@ -64,7 +64,7 @@ void Stabilizer::removeBehavior(uint8_t discriptor)
 void Stabilizer::begin()
 {
     if(!isRunning && !task){
-        this->task = new std::thread(stabilizerLoop, this);
+        this->task = new std::thread(&Stabilizer::stabilizerLoop, this);
         isRunning = true;
     }
 }
