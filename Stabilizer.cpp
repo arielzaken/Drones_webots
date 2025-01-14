@@ -13,7 +13,6 @@ void Stabilizer::stabilizerLoop()
         droneController->setPitch(command[W]);
         droneController->setYaw(command[Y]);
         droneController->setRoll(command[X]);
-        //std::this_thread::sleep_for(std::chrono::milliseconds(4));
     }
     std::cout << "Stabilizer stoped\n";
 }
@@ -44,7 +43,7 @@ Stabilizer::Stabilizer(
 uint8_t Stabilizer::addBehavior(Behavior_I &behavior)
 {
     if(numOfBehaviors <= STABILIZER_NUM_OF_BEHAVIORS-1){
-        for(size_t i = 0; i < STABILIZER_NUM_OF_BEHAVIORS; i++){
+        for(uint8_t i = 0; i < STABILIZER_NUM_OF_BEHAVIORS; i++){
             if(!behaviors[i]){
                 behaviors[i] = &behavior;
                 behavior.setup();
@@ -53,7 +52,7 @@ uint8_t Stabilizer::addBehavior(Behavior_I &behavior)
             }
         }
     }
-    return 0;
+    return UINT8_MAX;
 }
 
 void Stabilizer::removeBehavior(uint8_t discriptor)

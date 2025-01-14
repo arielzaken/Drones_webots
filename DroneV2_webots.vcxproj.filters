@@ -186,6 +186,12 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\VacuumGripper.cpp">
       <Filter>Source Files\webots</Filter>
     </ClCompile>
+    <ClCompile Include="VelPID_Z.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Vel_B.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -241,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="AltSensor.h">
       <Filter>Header Files\Sensors\AltSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="VelPID_Z.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Vel_B.h">
+      <Filter>Header Files\Operator\Behaviors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

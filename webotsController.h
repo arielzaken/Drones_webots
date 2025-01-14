@@ -1,15 +1,16 @@
 #pragma once
 #include "DroneController_I.h"
 #include "AltSensor.h"
+#include "VelocitySensor.h"
 
-#include <webots/Robot.hpp>
+#include <webots/Supervisor.hpp>
 
 #include <thread>
 
 #define TIME_STEP 32
 
 class WebotsController : public DroneController_I {
-	webots::Robot* robot;
+	webots::Supervisor* robot;
 	webots::Altimeter* alt;
 	webots::Gyro* gyro;
 	webots::Motor* ruMotor;
@@ -36,7 +37,9 @@ public:
 	void disable() override;
 	void enable() override;
 	void wait();
+	bool isRunning() { return pThread != nullptr; }
 	friend class WebotsAltSensor;
+	friend class WebotsVelocitySensor;
 };
 
 class WebotsAltSensor : public AltSensor {
@@ -45,4 +48,12 @@ public:
 	WebotsAltSensor(WebotsController& _wc) : wc(&_wc) {}
 	// Inherited via AltSensor
 	float read() override;
+};
+
+class WebotsVelocitySensor : public VelocitySensor {
+	WebotsController* wc;
+public:
+	WebotsVelocitySensor(WebotsController& _wc) : wc(&_wc) {}
+	// Inherited via AltSensor
+	Velocity read() override;
 };

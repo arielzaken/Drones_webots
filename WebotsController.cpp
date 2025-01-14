@@ -72,7 +72,7 @@ void WebotsController::loop()
 
 WebotsController::WebotsController()
 {
-    robot = new Robot();
+    robot = new Supervisor();
     alt = robot->getAltimeter("altimeter");
     alt->enable(TIME_STEP);
     gyro = robot->getGyro("gyro");
@@ -95,10 +95,10 @@ WebotsController::WebotsController()
 
 WebotsController::~WebotsController()
 {
-    delete robot;
-    robot = nullptr;
     delete pThread;
     pThread = nullptr;
+    delete robot;
+    robot = nullptr;
 }
 
 void WebotsController::setThrottle(uint16_t _throttle)
@@ -159,4 +159,11 @@ void WebotsController::wait()
 float WebotsAltSensor::read()
 {
     return wc->alt->getValue();
+}
+
+Velocity WebotsVelocitySensor::read()
+{
+    Node* robotNode = wc->robot->getSelf();
+    const double* vel = robotNode->getVelocity();
+    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
 }

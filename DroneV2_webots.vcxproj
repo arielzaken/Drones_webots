@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectName)\..</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -178,6 +181,8 @@
     <ClCompile Include="Stabilizer.cpp" />
     <ClCompile Include="States.cpp" />
     <ClCompile Include="VelP3I.cpp" />
+    <ClCompile Include="VelPID_Z.cpp" />
+    <ClCompile Include="Vel_B.cpp" />
     <ClCompile Include="WebotsController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +203,8 @@
     <ClInclude Include="States.h" />
     <ClInclude Include="VelocitySensor.h" />
     <ClInclude Include="VelP3I.h" />
+    <ClInclude Include="VelPID_Z.h" />
+    <ClInclude Include="Vel_B.h" />
     <ClInclude Include="webotsController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

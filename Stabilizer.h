@@ -18,7 +18,7 @@ class Stabilizer
 
     std::thread* task = nullptr;
     
-    volatile bool isRunning = true;
+    volatile bool isRunning = false;
 
     void stabilizerLoop();
 
@@ -43,6 +43,4 @@ public:
 
     void begin();
     void end();
-
-    friend void stabilizerLoop(void* This);
 };
