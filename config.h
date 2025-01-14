@@ -118,4 +118,11 @@
 #define STABILIZER_NUM_OF_BEHAVIORS 4
 
 
+/****************
+* webots CONFIG *
+****************/
+#define TIME_STEP 32
+#define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0) 
+
+
 #endif // _CONFIG_H

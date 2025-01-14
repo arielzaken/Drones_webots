@@ -2,9 +2,22 @@
 
 #define CLAMP(value, low, high) ((value) < (low) ? (low) : ((value) > (high) ? (high) : (value)))
 
-VelPID_Z::VelPID_Z(float kp, float ki, float kd, uint16_t bt) : pid(kp, ki, kd, 1000), baseThrottle(bt){}
+VelPID::VelPID(const VelPID_params_t& params) : 
+    pidx(params.kp_x, params.ki_x, params.kd_x, 1000),
+    pidy(params.kp_y, params.ki_y, params.kd_y, 1000),
+    pidz(params.kp_z, params.ki_z, params.kd_z, 1000),
+    pidw(params.kp_w, params.ki_w, params.kd_w, 1000),
+    baseThrottle(params.baseThrottle)
+{
 
-Twist<uint16_t> VelPID_Z::update(Velocity to, Velocity value)
+}
+
+Twist<uint16_t> VelPID::update(Velocity to, Velocity value)
 { 
-    return { 1500, 1500, (uint16_t)CLAMP(baseThrottle + pid.update(to[Z], value[Z]), 1000, 2000), 1500};
+    return { 
+        (uint16_t)CLAMP(1500 + pidx.update(to[X], value[X]), 1000, 2000),
+        (uint16_t)CLAMP(1500 + pidy.update(to[Y], value[Y]), 1000, 2000),
+        (uint16_t)CLAMP(baseThrottle + pidz.update(to[Z], value[Z]), 1000, 2000),
+        (uint16_t)CLAMP(1500 + pidw.update(to[W], value[W]), 1000, 2000)
+    };
 }

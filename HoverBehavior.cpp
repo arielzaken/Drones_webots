@@ -1,14 +1,17 @@
 #include "HoverBehavior.h"
 #include "Primitives.h"
 
+#define EPS 0.01
+#define ZERO(x){abs(x) < EPS ? 0.0f : x}
+
+void HoverBehavior::SetRequiredAlt(float reqAlt)
+{
+    requiredAlt = reqAlt;
+}
+
 Velocity HoverBehavior::calcBehavior()
 {
-    uint16_t alt = altSensor->read();
-    int16_t diff = (int16_t)(requiredAlt - alt);
-    if(diff * diff > 0.01){ // the fhreshold is 10, 100 for skiping the sqrt
-        return {0, 0, (float)diff, 0};
-    }
-    return {0, 0, 0, 0};
+    return {0, 0, ZERO(requiredAlt - altSensor->read()), 0};
 }
 
 void HoverBehavior::setup()

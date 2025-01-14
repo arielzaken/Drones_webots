@@ -4,12 +4,21 @@
 #include "Primitives.h"
 #include "PID.h"
 
-class VelPID_Z : public Controller_I<Twist<uint16_t>, Velocity>
+typedef struct VelPID_params_t {
+	float kp_x, ki_x, kd_x;
+	float kp_y, ki_y, kd_y;
+	float kp_z, ki_z, kd_z;
+	float kp_w, ki_w, kd_w;
+	uint16_t baseThrottle;
+} VelPID_params_t;
+
+
+class VelPID : public Controller_I<Twist<uint16_t>, Velocity>
 {
-	PID pid;
+	PID pidx, pidy, pidz, pidw;
 	uint16_t baseThrottle;
 public:
-	VelPID_Z(float kp, float ki, float kd, uint16_t baseThrottle);
+	VelPID(const VelPID_params_t& params);
 	// Inherited via Controller_I
 	virtual Twist<uint16_t> update(Velocity setpoint, Velocity measured_value) override;
 };

@@ -6,9 +6,10 @@ class HoverBehavior : public Behavior_I
 {
 private:
     AltSensor* altSensor;
-    uint16_t requiredAlt = 0;
+    float requiredAlt = 0.0;
 public:
-    HoverBehavior(AltSensor& altSensor, uint16_t reqAlt) : altSensor(&altSensor), requiredAlt(reqAlt) {}
+    HoverBehavior(AltSensor& altSensor, float reqAlt) : altSensor(&altSensor), requiredAlt(reqAlt) {}
+    void SetRequiredAlt(float reqAlt);
     virtual Velocity calcBehavior() override; 
     virtual void setup() override;
 };
