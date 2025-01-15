@@ -8,7 +8,7 @@
 using namespace webots;
 
 constexpr auto Kp = 0.05;
-constexpr auto Kd = 0.2;
+constexpr auto Kd = 0.01;
 
 #define REALL_TIME_STEP (TIME_STEP/1000.0) 
 # define PI           3.14159265358979323846  /* pi */
@@ -22,9 +22,9 @@ void WebotsController::loop()
     while (robot->step(TIME_STEP) != -1) {
 
         // Normalize inputs to the range [-1, 1] for target control
-        targetPitch = ((pitch - 1500.0) / 500.0) * (PI / 4);  // Scale from [1000, 2000] to [-1, 1]
+        targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-1, 1]
         targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-1, 1]
-        targetYaw = ((yaw - 1500.0) / 500.0) * PI;      // Scale from [1000, 2000] to [-1, 1]
+        targetPitch = ((pitch - 1500.0) / 500.0) * PI;  // Scale from [1000, 2000] to [-1, 1]
         targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [-1, 1]
 
         // Get the current rotational velocities (gyro values in rad/s)
@@ -36,24 +36,24 @@ void WebotsController::loop()
         angy += rVely * REALL_TIME_STEP;
         angz += rVelz * REALL_TIME_STEP;
         // Calculate errors between target and current gyro values
-        double errorPitch = targetPitch - angx;
+        double errorYaw = targetYaw - angx;
         double errorRoll = targetRoll - angy;
-        double errorYaw = targetYaw - angz;
+        double errorPitch = targetPitch - angz;
 
         // Derivative terms to account for rate of change of error
-        double dErrorPitch = (errorPitch - prevErrorPitch);
-        double dErrorRoll = (errorRoll - prevErrorRoll);
-        double dErrorYaw = (errorYaw - prevErrorYaw);
+        double dErrorYaw = (errorYaw - prevErrorYaw) / REALL_TIME_STEP;
+        double dErrorRoll = (errorRoll - prevErrorRoll) / REALL_TIME_STEP;
+        double dErrorPitch = (errorPitch - prevErrorPitch) / REALL_TIME_STEP;
 
         // PD control calculations for pitch, roll, and yaw
-        double correctionPitch = Kp * errorPitch + Kd * dErrorPitch; 
-        double correctionRoll = Kp* errorRoll + Kd * dErrorRoll; 
         double correctionYaw = Kp * errorYaw + Kd * dErrorYaw;
+        double correctionRoll = Kp * errorRoll + Kd * dErrorRoll; 
+        double correctionPitch = Kp * errorPitch + Kd * dErrorPitch; 
 
         // Motor mixing to adjust motor velocities based on corrections
-        double luv = clamp(targetThrottle + correctionPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
+        double luv = clamp(targetThrottle - correctionPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
         double ruv = clamp(targetThrottle + correctionPitch - correctionRoll + correctionYaw, -1, 1) * maxVel;
-        double ldv = clamp(targetThrottle - correctionPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
+        double ldv = clamp(targetThrottle + correctionPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
         double rdv = clamp(targetThrottle - correctionPitch - correctionRoll - correctionYaw, -1, 1) * maxVel;
 
         // Set motor velocities (in the range [0, max motor speed], adjust signs if needed)

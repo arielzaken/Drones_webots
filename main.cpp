@@ -21,19 +21,18 @@ WebotsAltSensor alt(wc);
 WebotsVelocitySensor vel(wc);
 
 VelPID velPIDz({
-		10.0, 1.0, 30.0, // X axis PID -> roll
-		10.0, 1.0, 30.0, // y axis PID -> yaw
-		20.0, 1.0, 30.0, // z axis PID -> throttle
-		10.0, 1.0, 30.0, // w turn PID -> pitch
+		100.0, 5.0, 10.0, // X axis PID -> roll
+		100.0, 5.0, 10.0, // y axis PID -> yaw
+		50.0, 1.0, 30.0, // z axis PID -> throttle
+		100.0, 5.0, 10.0, // w turn PID -> pitch
 		1179             // baseThrottle
 	});
 Stabilizer stabelizer(wc, velPIDz, vel);
 HoverBehavior hb(alt, 5);
-Vel_B vb({ 1,0,10,0 });
+Vel_B vb({ 0,0,0,0.2 });
 
 
 int main() {
-	std::this_thread::sleep_for(std::chrono::seconds(5));
 	wc.enable();
 	stabelizer.begin();
 	uint8_t hb_h = stabelizer.addBehavior(vb);
