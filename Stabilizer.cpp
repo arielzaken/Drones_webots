@@ -1,3 +1,4 @@
+#include<iostream>
 #include "Stabilizer.h"
 #include <chrono>
 #include <thread>
@@ -8,23 +9,26 @@ void Stabilizer::stabilizerLoop()
     while(isRunning) {
         Velocity twist = calcTwist();
         Velocity currVel = velocitySensor->read();
-        Twist<uint16_t> command = controller->update(twist ,currVel);
+        ControllSignal command = controller->update(twist ,currVel);
         droneController->setThrottle(command[Z]);
-        droneController->setPitch(command[W]);
-        droneController->setYaw(command[Y]);
         droneController->setRoll(command[X]);
+        droneController->setYaw(command[Y]);
+        droneController->setPitch(command[W]); 
     }
     std::cout << "Stabilizer stoped\n";
 }
 
 Velocity Stabilizer::calcTwist()
 {
-    Velocity res;
+    Velocity res = { 0, 0, 0, 0 };
     for (size_t i = 0; i < numOfBehaviors; i++){
         if(behaviors[i] != nullptr){
             res += behaviors[i]->calcBehavior();
         }
     }
+
+    // TODO: enter a Pframe to Rframe translate
+
     return res;
 }
 

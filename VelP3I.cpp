@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Twist<uint16_t> VelP3I::update(Velocity setpoint, Velocity measured_value)
+ControllSignal VelP3I::update(Velocity setpoint, Velocity measured_value)
 {
     return {
         (uint16_t)clamp(xP3I.update(setpoint[X], measured_value[X]), 1000, 2000),

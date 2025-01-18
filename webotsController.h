@@ -7,11 +7,12 @@
 
 #include <thread>
 
-#define TIME_STEP 32
+#include "config.h"
 
 class WebotsController : public DroneController_I {
 	webots::Supervisor* robot;
 	webots::Altimeter* alt;
+	webots::InertialUnit* imu;
 	webots::Gyro* gyro;
 	webots::Motor* ruMotor;
 	webots::Motor* rdMotor;

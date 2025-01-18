@@ -10,6 +10,6 @@ class PID : public Controller_I<float, float> {
 	int32_t max_value;
 	std::chrono::system_clock::time_point lastTime;
 public:
-	PID(float p, float i, float d, float max_value);
+	PID(float p, float i, float d, int32_t max_value);
 	virtual float update(float setpoint, float measured_value) override;
 };

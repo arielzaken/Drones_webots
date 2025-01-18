@@ -13,13 +13,13 @@ typedef struct VelPID_params_t {
 } VelPID_params_t;
 
 
-class VelPID : public Controller_I<Twist<uint16_t>, Velocity>
+class VelPID : public Controller_I<ControllSignal, Velocity>
 {
 	PID pidx, pidy, pidz, pidw;
 	uint16_t baseThrottle;
 public:
 	VelPID(const VelPID_params_t& params);
 	// Inherited via Controller_I
-	virtual Twist<uint16_t> update(Velocity setpoint, Velocity measured_value) override;
+	virtual ControllSignal update(Velocity setpoint, Velocity measured_value) override;
 };
 

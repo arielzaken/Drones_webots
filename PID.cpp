@@ -3,7 +3,7 @@
 #include "algorithm.cpp"
 #include <chrono>
 
-PID::PID(float p, float i, float d, float max_value)
+PID::PID(float p, float i, float d, int32_t max_value)
     : kp(p), ki(i), kd(d),
     max_value(max_value),
     error(0), prev_error(0),

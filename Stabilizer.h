@@ -6,7 +6,7 @@
 #include "config.h"
 #include <thread>
 
-typedef Controller_I<Twist<uint16_t>,Velocity> Controller_t;
+typedef Controller_I<ControllSignal,Velocity> Controller_t;
 
 class Stabilizer
 {

@@ -9,9 +9,9 @@ VelPID::VelPID(const VelPID_params_t& params) :
     baseThrottle(params.baseThrottle) 
 {}
 
-Twist<uint16_t> VelPID::update(Velocity to, Velocity value)
+ControllSignal VelPID::update(Velocity to, Velocity value)
 {
-    Twist<uint16_t> res;
+    ControllSignal res;
     res[X] = (uint16_t)clamp(1500 + pidx.update(to[X], value[X]), 1000, 2000);
     res[Y] = (uint16_t)clamp(1500 + pidy.update(to[Y], value[Y]), 1000, 2000);
     res[Z] = (uint16_t)clamp(baseThrottle + pidz.update(to[Z], value[Z]), 1000, 2000);

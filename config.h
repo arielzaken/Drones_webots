@@ -7,7 +7,7 @@
 //#define DEBUG_PRINT_SERIAL HardwareSerial
 
 //#define DEBUG_PRINT_SERIAL ??????
-
+# define PI           3.14159265358979323846  /* pi */
 
 #define DEBUG_PRINT_DELAY 200
 

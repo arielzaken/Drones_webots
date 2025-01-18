@@ -5,56 +5,50 @@
 #include <webots/Gyro.hpp>
 #include "algorithm.cpp"
 
+
 using namespace webots;
 
 constexpr auto Kp = 0.05;
 constexpr auto Kd = 0.01;
 
-#define REALL_TIME_STEP (TIME_STEP/1000.0) 
-# define PI           3.14159265358979323846  /* pi */
 
 void WebotsController::loop()
 {
     double targetPitch, targetRoll, targetYaw, targetThrottle;
     double prevErrorPitch = 0, prevErrorRoll = 0, prevErrorYaw = 0;
-    double angx = 0, angy = 0, angz = 0;
+    double angx = 0, angy = 0;
     const double maxVel = luMotor->getMaxVelocity();
     while (robot->step(TIME_STEP) != -1) {
 
         // Normalize inputs to the range [-1, 1] for target control
         targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-1, 1]
         targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-1, 1]
-        targetPitch = ((pitch - 1500.0) / 500.0) * PI;  // Scale from [1000, 2000] to [-1, 1]
+        targetPitch = ((pitch - 1500.0) / 500.0) / 100;  // Scale from [1000, 2000] to [-1, 1]
         targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [-1, 1]
 
         // Get the current rotational velocities (gyro values in rad/s)
         const double* val = gyro->getValues(); 
         double rVelx = val[0]; // Pitch rate (rad/s) 
         double rVely = val[1]; // Roll rate (rad/s) 
-        double rVelz = val[2]; // Yaw rate (rad/s)
-        angx += rVelx * REALL_TIME_STEP;
-        angy += rVely * REALL_TIME_STEP;
-        angz += rVelz * REALL_TIME_STEP;
+        angx += rVelx * WEBOTS_STEP_TIME_MS;
+        angy += rVely * WEBOTS_STEP_TIME_MS;
         // Calculate errors between target and current gyro values
         double errorYaw = targetYaw - angx;
         double errorRoll = targetRoll - angy;
-        double errorPitch = targetPitch - angz;
 
         // Derivative terms to account for rate of change of error
-        double dErrorYaw = (errorYaw - prevErrorYaw) / REALL_TIME_STEP;
-        double dErrorRoll = (errorRoll - prevErrorRoll) / REALL_TIME_STEP;
-        double dErrorPitch = (errorPitch - prevErrorPitch) / REALL_TIME_STEP;
+        double dErrorYaw = (errorYaw - prevErrorYaw) / WEBOTS_STEP_TIME_MS;
+        double dErrorRoll = (errorRoll - prevErrorRoll) / WEBOTS_STEP_TIME_MS;
 
         // PD control calculations for pitch, roll, and yaw
         double correctionYaw = Kp * errorYaw + Kd * dErrorYaw;
         double correctionRoll = Kp * errorRoll + Kd * dErrorRoll; 
-        double correctionPitch = Kp * errorPitch + Kd * dErrorPitch; 
 
         // Motor mixing to adjust motor velocities based on corrections
-        double luv = clamp(targetThrottle - correctionPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
-        double ruv = clamp(targetThrottle + correctionPitch - correctionRoll + correctionYaw, -1, 1) * maxVel;
-        double ldv = clamp(targetThrottle + correctionPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
-        double rdv = clamp(targetThrottle - correctionPitch - correctionRoll - correctionYaw, -1, 1) * maxVel;
+        double luv = clamp(targetThrottle - targetPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
+        double ruv = clamp(targetThrottle + targetPitch - correctionRoll + correctionYaw, -1, 1) * maxVel;
+        double ldv = clamp(targetThrottle + targetPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
+        double rdv = clamp(targetThrottle - targetPitch - correctionRoll - correctionYaw, -1, 1) * maxVel;
 
         // Set motor velocities (in the range [0, max motor speed], adjust signs if needed)
         ruMotor->setVelocity(-ruv);  // Right upper motor
@@ -63,7 +57,6 @@ void WebotsController::loop()
         ldMotor->setVelocity(-ldv);  // Left down motor
 
         // Store previous errors for derivative calculation in next loop
-        prevErrorPitch = errorPitch;
         prevErrorRoll = errorRoll;
         prevErrorYaw = errorYaw;
     }
@@ -158,12 +151,24 @@ void WebotsController::wait()
 
 float WebotsAltSensor::read()
 {
-    return wc->alt->getValue();
+    return (float)(wc->alt->getValue());
 }
 
 Velocity WebotsVelocitySensor::read()
 {
     Node* robotNode = wc->robot->getSelf();
-    const double* vel = robotNode->getVelocity();
-    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
+    const double* temp = robotNode->getVelocity();
+    Vec3D<double> Ivel{ temp[0], temp[1], temp[2] };
+    double w = temp[5];
+    MCMatrix3d Mframe(robotNode->getOrientation());
+
+    // find the rot axis of the translate 
+    Vec3D<double> rotAxis = Mframe.row(Z).cross(Eigen::Vector3d::UnitZ()).normalized();
+
+    double angle_rad = std::acos(Mframe(2,2)); // get the angle to rotate back to aline with the Iframe
+
+    Matrix3d Lframe = Eigen::AngleAxisd(-angle_rad, rotAxis) * Mframe;
+    //std::cout << Lframe << std::endl;
+    Vec3D<double> Lvel = Lframe.transpose() * Ivel;
+    return { 0, 0, (float)Ivel[Z], 0};
 }
