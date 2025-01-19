@@ -24,7 +24,7 @@ void WebotsController::loop()
         // Normalize inputs to the range [-1, 1] for target control
         targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-1, 1]
         targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-1, 1]
-        targetPitch = ((pitch - 1500.0) / 500.0) * PI;  // Scale from [1000, 2000] to [-1, 1]
+        targetPitch = ((pitch - 1500.0) / 500.0) * 0.01;  // Scale from [1000, 2000] to [-1, 1]
         targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [-1, 1]
 
         // Get the current rotational velocities (gyro values in rad/s)
@@ -34,27 +34,23 @@ void WebotsController::loop()
         double rVelz = val[2]; // Yaw rate (rad/s)
         angx += rVelx * REALL_TIME_STEP;
         angy += rVely * REALL_TIME_STEP;
-        angz += rVelz * REALL_TIME_STEP;
         // Calculate errors between target and current gyro values
         double errorYaw = targetYaw - angx;
         double errorRoll = targetRoll - angy;
-        double errorPitch = targetPitch - angz;
 
         // Derivative terms to account for rate of change of error
         double dErrorYaw = (errorYaw - prevErrorYaw) / REALL_TIME_STEP;
         double dErrorRoll = (errorRoll - prevErrorRoll) / REALL_TIME_STEP;
-        double dErrorPitch = (errorPitch - prevErrorPitch) / REALL_TIME_STEP;
 
         // PD control calculations for pitch, roll, and yaw
         double correctionYaw = Kp * errorYaw + Kd * dErrorYaw;
         double correctionRoll = Kp * errorRoll + Kd * dErrorRoll;
-        double correctionPitch = Kp * errorPitch + Kd * dErrorPitch;
 
         // Motor mixing to adjust motor velocities based on corrections
-        double luv = clamp(targetThrottle - correctionPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
-        double ruv = clamp(targetThrottle + correctionPitch - correctionRoll + correctionYaw, -1, 1) * maxVel;
-        double ldv = clamp(targetThrottle + correctionPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
-        double rdv = clamp(targetThrottle - correctionPitch - correctionRoll - correctionYaw, -1, 1) * maxVel;
+        double luv = clamp(targetThrottle - targetPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
+        double ruv = clamp(targetThrottle + targetPitch - correctionRoll + correctionYaw, -1, 1) * maxVel;
+        double ldv = clamp(targetThrottle + targetPitch + correctionRoll - correctionYaw, -1, 1) * maxVel;
+        double rdv = clamp(targetThrottle - targetPitch - correctionRoll - correctionYaw, -1, 1) * maxVel;
 
         // Set motor velocities (in the range [0, max motor speed], adjust signs if needed)
         ruMotor->setVelocity(-ruv);  // Right upper motor
@@ -63,7 +59,6 @@ void WebotsController::loop()
         ldMotor->setVelocity(-ldv);  // Left down motor
 
         // Store previous errors for derivative calculation in next loop
-        prevErrorPitch = errorPitch;
         prevErrorRoll = errorRoll;
         prevErrorYaw = errorYaw;
     }
@@ -158,31 +153,46 @@ void WebotsController::wait()
 
 float WebotsAltSensor::read()
 {
-    return wc->alt->getValue();
-}
-
-Velocity WebotsVelocitySensor::read()
-{
-    Node* robotNode = wc->robot->getSelf();
-    const double* vel = robotNode->getVelocity();
-    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
+    return (float)wc->alt->getValue();
 }
 
 //Velocity WebotsVelocitySensor::read()
 //{
 //    Node* robotNode = wc->robot->getSelf();
-//    const double* temp = robotNode->getVelocity();
-//    //Vec3D<double> Ivel{ temp[0], temp[1], temp[2] };
-//    //double w = temp[5];
-//    //MCMatrix3d Mframe(robotNode->getOrientation());
-//
-//    //// find the rot axis of the translate 
-//    //Vec3D<double> rotAxis = Mframe.col(Z).cross(Eigen::Vector3d::UnitZ()).normalized();
-//
-//    //double angle_rad = std::acos(Mframe(2,2)); // get the angle to rotate back to aline with the Iframe
-//
-//    //Matrix3d Lframe = Eigen::AngleAxisd(angle_rad, rotAxis) * Mframe;
-//    ////std::cout << Lframe << std::endl;
-//    //Vec3D<double> Lvel = Lframe.transpose() * Ivel;
-//    return { (float)temp[X], (float)temp[Y], (float)temp[Z], (float)temp[5]};
+//    const double* vel = robotNode->getVelocity();
+//    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
 //}
+
+Velocity WebotsVelocitySensor::read()
+{
+    std::cout << "===============================\n";
+    Node* robotNode = wc->robot->getSelf();
+    const double* temp = robotNode->getVelocity();
+    Vec3D<double> Ivel{ temp[0], temp[1], temp[2] };
+    MCMatrix3d Mframe(robotNode->getOrientation());
+    std::cout << "Mframe:\n" << Mframe << std::endl;
+    Matrix3d Lframe;
+    Eigen::Vector3d diff = (Eigen::Vector3d)(Mframe.row(Z)) - Eigen::Vector3d::UnitZ();
+    if (diff.norm() <= 0.000001)
+    {
+        Lframe = Mframe.matrix();
+    }
+    else {
+        // find the rot axis of the translate 
+        Lframe = Mframe.matrix();
+        Lframe.row(Z) = Eigen::Vector3d::UnitZ();
+        Lframe.row(X) = Lframe.row(Y).cross(Lframe.row(Z)).normalized();
+        Lframe.row(Y) = Lframe.row(Z).cross(Lframe.row(X)).normalized();
+        //Vec3D<double> rotAxis = Mframe.row(Z).cross(Eigen::Vector3d::UnitZ()).normalized();
+        //std::cout << "rotAxis:\n" << Mframe.row(Z) << "\n" << rotAxis << std::endl;
+
+        //double angle_rad = std::acos(Mframe(2, 2)); // get the angle to rotate back to aline with the Iframe
+        //std::cout << "angle_rad:\n" << angle_rad << std::endl;
+
+        //Lframe = Eigen::AngleAxisd(angle_rad, rotAxis) * Mframe;
+    }
+    std::cout << "Lframe:\n" << Lframe << std::endl;
+    Vec3D<double> Lvel = Lframe * Ivel;
+    std::cout << "Lvel:\n" << Lvel << std::endl;
+    return { (float)Lvel[X], (float)Lvel[Y], (float)Lvel[Z], (float)temp[5]}; 
+}

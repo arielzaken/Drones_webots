@@ -28,6 +28,7 @@ int main() {
 	wc.enable();
 	stabelizer.begin();
 	uint8_t hb_h = stabelizer.addBehavior(hb);
+	uint8_t vb_h = stabelizer.addBehavior(vb);
 	wc.wait();
 	stabelizer.end();
 	return 0;
