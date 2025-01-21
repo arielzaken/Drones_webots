@@ -172,6 +172,9 @@ Velocity WebotsVelocitySensor::read()
 
 Pos WebotsGlobalOrientaionSensor::read()
 {
-    const double* temp = wc->robot->getSelf()->getPosition();
-    return Pos{temp[X], temp[Y], temp[Z], /*to be continued*/};
+    Node* robot = wc->robot->getSelf();
+    const double* pos = robot->getPosition();
+    const double* ori = robot->getOrientation();
+    double ang = std::acos(ori[4]);
+    return Pos{ (float)pos[X], (float)pos[Y], (float)pos[Z], (float)(ori[1] > 0 ? -ang : ang)};
 }

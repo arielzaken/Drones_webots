@@ -3,7 +3,7 @@
 #include "DroneController_I.h"
 #include "GlobalOrientaionSensor.h"
 #include "Controller_I.h"
-#include "LframeMaker.h"
+#include "LframeMaker_I.h"
 #include "config.h"
 #include <thread>
 
@@ -15,7 +15,7 @@ class Stabilizer
     DroneController_I* droneController;
     Controller_t* controller;
     GlobalOrientaionSensor* GOS;
-    LframeMaker* Lframe;
+    LframeMaker_I* Lframe;
 
     std::thread* task = nullptr;
     
@@ -27,7 +27,8 @@ public:
     Stabilizer(
         DroneController_I& _droneController,
         Controller_t& _controller,
-        GlobalOrientaionSensor& _GOS
+        GlobalOrientaionSensor& _GOS,
+        LframeMaker_I& Lframe
         );
     void begin();
     void end();

@@ -18,12 +18,13 @@ void Stabilizer::stabilizerLoop()
     std::cout << "Stabilizer stoped\n";
 }
 
-Stabilizer::Stabilizer(DroneController_I& _droneController,
-    Controller_t& _controller,
-    GlobalOrientaionSensor& _GOS) :
+Stabilizer::Stabilizer(DroneController_I& _droneController, Controller_t& _controller, GlobalOrientaionSensor& _GOS, LframeMaker_I& _Lframe):
     droneController(&_droneController),
     controller(&_controller),
-    GOS(&_GOS) {}
+    GOS(&_GOS),
+    Lframe(&_Lframe)
+{
+}
 
 void Stabilizer::begin()
 {

@@ -2,9 +2,10 @@
 
 #include "Primitives.h"
 #include "Behavior_I.h"
+#include "LframeMaker_I.h"
 #include "config.h"
 
-class LframeMaker
+class LframeMaker : public LframeMaker_I
 {
     Behavior_I* behaviors[STABILIZER_NUM_OF_BEHAVIORS];
     uint8_t numOfBehaviors;
@@ -23,6 +24,6 @@ public:
      */
     void removeBehavior(uint8_t discriptor);
 
-    Pos calcLframe();
+    Pos calcLframe() override;
 };
 
