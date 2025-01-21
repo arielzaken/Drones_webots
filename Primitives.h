@@ -4,11 +4,8 @@
 
 enum{ X, Y, Z, W };
 
-template <typename T>
-using Vec3D = Eigen::Vector<T, 3>;
-
-template <typename T>
-using Vec2D = Eigen::Vector<T, 2>; 
+using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 using ControllSignal = Eigen::Vector<uint16_t, 4>;
 
@@ -20,6 +17,9 @@ using Acceleration = Pos;
 
 using Eigen::Matrix3f;
 using Eigen::Matrix3d;
+
+using Eigen::Matrix2f;
+using Eigen::Matrix2d;
 
 using MCMatrix3d = Eigen::Map<const Eigen::Matrix<double, 3, 3, Eigen::RowMajor>>;
 using MCMatrix3f = Eigen::Map<const Eigen::Matrix<float, 3, 3, Eigen::RowMajor>>;

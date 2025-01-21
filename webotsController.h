@@ -2,6 +2,7 @@
 #include "DroneController_I.h"
 #include "AltSensor.h"
 #include "VelocitySensor.h"
+#include "GlobalOrientaionSensor.h"
 
 #include <webots/Supervisor.hpp>
 
@@ -41,6 +42,7 @@ public:
 	bool isRunning() { return pThread != nullptr; }
 	friend class WebotsAltSensor;
 	friend class WebotsVelocitySensor;
+	friend class WebotsGlobalOrientaionSensor;
 };
 
 class WebotsAltSensor : public AltSensor {
@@ -57,4 +59,12 @@ public:
 	WebotsVelocitySensor(WebotsController& _wc) : wc(&_wc) {}
 	// Inherited via AltSensor
 	Velocity read() override;
+};
+
+class WebotsGlobalOrientaionSensor : public GlobalOrientaionSensor {
+	WebotsController* wc;
+public:
+	WebotsGlobalOrientaionSensor(WebotsController& _wc) : wc(&_wc) {}
+	// Inherited via AltSensor
+	Pos read() override;
 };

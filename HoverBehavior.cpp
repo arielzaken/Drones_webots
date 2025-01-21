@@ -1,7 +1,7 @@
 #include "HoverBehavior.h"
 #include "Primitives.h"
 
-#define EPS 0.0000001
+#define EPS 0.1
 #define ZERO(x){abs(x) < EPS ? 0.0f : x}
 
 void HoverBehavior::SetRequiredAlt(float reqAlt)

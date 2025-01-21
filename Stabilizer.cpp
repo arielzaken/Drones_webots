@@ -7,62 +7,23 @@ void Stabilizer::stabilizerLoop()
 {
     std::cout << "Stabilizer started!\n";
     while(isRunning) {
-        Velocity twist = calcTwist();
-        Velocity currVel = velocitySensor->read();
-        ControllSignal command = controller->update(twist ,currVel);
-        droneController->setThrottle(command[Z]);
+        Pos lFrame = Lframe->calcLframe();
+        Pos currPos = GOS->read();
+        ControllSignal command = controller->update(lFrame, currPos);
         droneController->setRoll(command[X]);
         droneController->setYaw(command[Y]);
+        droneController->setThrottle(command[Z]);
         droneController->setPitch(command[W]); 
     }
     std::cout << "Stabilizer stoped\n";
 }
 
-Velocity Stabilizer::calcTwist()
-{
-    Velocity res = { 0, 0, 0, 0 };
-    for (size_t i = 0; i < numOfBehaviors; i++){
-        if(behaviors[i] != nullptr){
-            res += behaviors[i]->calcBehavior();
-        }
-    }
-
-    // TODO: enter a Pframe to Rframe translate
-
-    return res;
-}
-
-Stabilizer::Stabilizer(
-    DroneController_I &_droneController,
-    Controller_t &_controller,
-    VelocitySensor &_velocitySensor) : 
+Stabilizer::Stabilizer(DroneController_I& _droneController,
+    Controller_t& _controller,
+    GlobalOrientaionSensor& _GOS) :
     droneController(&_droneController),
     controller(&_controller),
-    velocitySensor(&_velocitySensor)
-{
-    memset(behaviors, 0, sizeof(Behavior_I*) * STABILIZER_NUM_OF_BEHAVIORS);
-    numOfBehaviors = 0;
-}
-
-uint8_t Stabilizer::addBehavior(Behavior_I &behavior)
-{
-    if(numOfBehaviors <= STABILIZER_NUM_OF_BEHAVIORS-1){
-        for(uint8_t i = 0; i < STABILIZER_NUM_OF_BEHAVIORS; i++){
-            if(!behaviors[i]){
-                behaviors[i] = &behavior;
-                behavior.setup();
-                numOfBehaviors++;
-                return i;
-            }
-        }
-    }
-    return UINT8_MAX;
-}
-
-void Stabilizer::removeBehavior(uint8_t discriptor)
-{
-    behaviors[discriptor] = nullptr;
-}
+    GOS(&_GOS) {}
 
 void Stabilizer::begin()
 {

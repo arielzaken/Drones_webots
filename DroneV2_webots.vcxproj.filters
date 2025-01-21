@@ -52,6 +52,9 @@
     <Filter Include="Source Files\webots">
       <UniqueIdentifier>{139adba9-049f-4fae-8b76-18254353b216}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sensors\GlobalOrientaionSensor">
+      <UniqueIdentifier>{4877e042-9fa6-4d54-9ede-d27f99569d57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="VelPID_Z.cpp">
       <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="Vel_B.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Accelerometer.cpp">
       <Filter>Source Files\webots</Filter>
@@ -192,6 +192,12 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\VacuumGripper.cpp">
       <Filter>Source Files\webots</Filter>
     </ClCompile>
+    <ClCompile Include="Vel_B.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="LframeMaker.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -253,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="Vel_B.h">
       <Filter>Header Files\Operator\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalOrientaionSensor.h">
+      <Filter>Header Files\Sensors\GlobalOrientaionSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="LframeMaker.h">
+      <Filter>Header Files\Operator\Operator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

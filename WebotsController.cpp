@@ -153,7 +153,7 @@ void WebotsController::wait()
 
 float WebotsAltSensor::read()
 {
-    return (float)wc->alt->getValue();
+    return wc->alt->getValue();
 }
 
 //Velocity WebotsVelocitySensor::read()
@@ -165,34 +165,13 @@ float WebotsAltSensor::read()
 
 Velocity WebotsVelocitySensor::read()
 {
-    std::cout << "===============================\n";
     Node* robotNode = wc->robot->getSelf();
     const double* temp = robotNode->getVelocity();
-    Vec3D<double> Ivel{ temp[0], temp[1], temp[2] };
-    MCMatrix3d Mframe(robotNode->getOrientation());
-    std::cout << "Mframe:\n" << Mframe << std::endl;
-    Matrix3d Lframe;
-    Eigen::Vector3d diff = (Eigen::Vector3d)(Mframe.row(Z)) - Eigen::Vector3d::UnitZ();
-    if (diff.norm() <= 0.000001)
-    {
-        Lframe = Mframe.matrix();
-    }
-    else {
-        // find the rot axis of the translate 
-        Lframe = Mframe.matrix();
-        Lframe.row(Z) = Eigen::Vector3d::UnitZ();
-        Lframe.row(X) = Lframe.row(Y).cross(Lframe.row(Z)).normalized();
-        Lframe.row(Y) = Lframe.row(Z).cross(Lframe.row(X)).normalized();
-        //Vec3D<double> rotAxis = Mframe.row(Z).cross(Eigen::Vector3d::UnitZ()).normalized();
-        //std::cout << "rotAxis:\n" << Mframe.row(Z) << "\n" << rotAxis << std::endl;
+    return { (float)temp[X], (float)temp[Y], (float)temp[Z], (float)temp[5]};
+}
 
-        //double angle_rad = std::acos(Mframe(2, 2)); // get the angle to rotate back to aline with the Iframe
-        //std::cout << "angle_rad:\n" << angle_rad << std::endl;
-
-        //Lframe = Eigen::AngleAxisd(angle_rad, rotAxis) * Mframe;
-    }
-    std::cout << "Lframe:\n" << Lframe << std::endl;
-    Vec3D<double> Lvel = Lframe * Ivel;
-    std::cout << "Lvel:\n" << Lvel << std::endl;
-    return { (float)Lvel[X], (float)Lvel[Y], (float)Lvel[Z], (float)temp[5]}; 
+Pos WebotsGlobalOrientaionSensor::read()
+{
+    const double* temp = wc->robot->getSelf()->getPosition();
+    return Pos{temp[X], temp[Y], temp[Z], /*to be continued*/};
 }
