@@ -9,7 +9,7 @@ PIDw::PIDw(float p, float i, float d)
     lastTime(std::chrono::system_clock::now()) {
 }
 
-float PIDw::update(Vector2d setpoint, Vector2d measured_value)
+float PIDw::update(const Matrix2d& setpoint, const Matrix2d& measured_value)
 {
     // Get the current time and calculate the time difference (dt) in milliseconds
     auto now = std::chrono::system_clock::now();
@@ -25,12 +25,13 @@ float PIDw::update(Vector2d setpoint, Vector2d measured_value)
 
     // Update the last time to the current time
     lastTime = now;
-
+    Vector2d a = setpoint.row(0);
+    Vector2d b = measured_value.row(0);
     // Calculate the error
-    if(setpoint[X]*measured_value[Y] > measured_value[X] * setpoint[Y])
-        error = std::acos(setpoint.dot(measured_value));
+    if(a[X] * b[Y] > b[X] * a[Y])
+        error = std::acos(a.dot(b));
     else
-        error = -std::acos(setpoint.dot(measured_value));
+        error = -std::acos(a.dot(b));
     error = 100 * error / ((error - PI) * (error + PI));
 
     // Update the integral term with anti-windup

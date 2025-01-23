@@ -57,5 +57,5 @@ class WebotsGlobalOrientaionSensor : public GlobalOrientaionSensor {
 public:
 	WebotsGlobalOrientaionSensor(WebotsController& _wc) : wc(&_wc) {}
 	// Inherited via AltSensor
-	Pos read() override;
+	Frame read() override;
 };

@@ -98,22 +98,22 @@ WebotsController::~WebotsController()
 
 void WebotsController::setThrottle(uint16_t _throttle)
 {
-    throttle = _throttle;
+    throttle = clamp(_throttle, 1000, 2000);
 }
 
 void WebotsController::setPitch(uint16_t _pitch)
 {
-    pitch = _pitch;
+    pitch = clamp(_pitch, 1000, 2000); 
 }
 
 void WebotsController::setYaw(uint16_t _yaw)
 {
-    yaw = _yaw;
+    yaw = clamp(_yaw, 1000, 2000); 
 }
 
 void WebotsController::setRoll(uint16_t _roll)
 {
-    roll = _roll;
+    roll = clamp(_roll, 1000, 2000); 
 }
 
 void WebotsController::setAUX(uint16_t channle, uint16_t auxValue)
@@ -153,7 +153,7 @@ void WebotsController::wait()
 
 float WebotsAltSensor::read()
 {
-    return wc->alt->getValue();
+    return (float)wc->alt->getValue();
 }
 
 //Velocity WebotsVelocitySensor::read()
@@ -163,12 +163,16 @@ float WebotsAltSensor::read()
 //    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
 //}
 
-Pos WebotsGlobalOrientaionSensor::read()
+Frame WebotsGlobalOrientaionSensor::read()
 {
     Node* robot = wc->robot->getSelf();
-    const double* pos = robot->getPosition();
-    const double* ori = robot->getOrientation();
-    double x = ori[1], y = ori[4];
+    MCVector3d pos(robot->getPosition());
+    MCMatrix3d ori(robot->getOrientation());
+    double x = ori(1), y = ori(4);
     double len = std::sqrt(x * x + y * y);
-    return Pos{ (float)pos[X], (float)pos[Y], (float)pos[Z], (float)(x/len), (float)(y/len)};
+    x = (x / len);
+    y = (y / len);
+    Matrix2d R;
+    R << y, -x, x, y;
+    return Frame( pos, R );
 }

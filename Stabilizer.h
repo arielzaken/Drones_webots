@@ -7,7 +7,7 @@
 #include "config.h"
 #include <thread>
 
-typedef Controller_I<ControllSignal,Pos> Controller_t;
+typedef Controller_I<ControllSignal,Frame> Controller_t;
 
 class Stabilizer
 {
@@ -16,6 +16,7 @@ class Stabilizer
     Controller_t* controller;
     GlobalOrientaionSensor* GOS;
     LframeMaker_I* Lframe;
+    uint16_t baseThrottle = 1000;
 
     std::thread* task = nullptr;
     
@@ -30,6 +31,7 @@ public:
         GlobalOrientaionSensor& _GOS,
         LframeMaker_I& Lframe
         );
+    void setBaseThrottle(uint16_t bt) { baseThrottle = bt; }
     void begin();
     void end();
 };

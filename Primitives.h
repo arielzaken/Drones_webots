@@ -1,13 +1,14 @@
 #pragma once
 
 #include <Eigen/Dense>
+#include "Frame.h"
 
-enum{ X, Y, Z ,Wx, Wy};
+enum{ X, Y, Z };
 
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 
-using ControllSignal = Eigen::Vector<uint16_t, 4>;
+using ControllSignal = Eigen::Vector<int16_t, 4>;
 
 using Pos = Eigen::Vector<float, 5>;
 using Velocity = Eigen::Vector<float, 4>;

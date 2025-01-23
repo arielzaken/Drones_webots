@@ -1,12 +1,12 @@
 #include "SimpleLframeMaker.h"
 
-Pos SimpleLframeMaker::calcLframe()
+Frame SimpleLframeMaker::calcLframe()
 {
     return Lframe;
 }
 
 
-SimpleLframeMaker::SimpleLframeMaker(const Pos& Lframe)
+SimpleLframeMaker::SimpleLframeMaker(const Frame& Lframe)
     : Lframe(Lframe)
 {
 }

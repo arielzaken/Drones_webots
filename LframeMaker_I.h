@@ -4,5 +4,5 @@
 
 class LframeMaker_I {
 public:
-	virtual Pos calcLframe() = 0;
+	virtual Frame calcLframe() = 0;
 };

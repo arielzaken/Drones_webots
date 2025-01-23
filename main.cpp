@@ -11,24 +11,37 @@ WebotsAltSensor alt(wc);
 WebotsGlobalOrientaionSensor gos(wc);
  
 VelPID controller({
-		0, 0, 0, // X axis PID -> roll
-		0, 0, 0, // y axis PID -> yaw
-		2, 0, 30, // z axis PD -> throttle
-		2, 0, 15, // w turn PD -> pitch
-		1179             // baseThrottle
+		10, 0, 25, // X axis PID -> roll
+		10, 0, 25, // y axis PID -> yaw
+		15, 0, 25, // z axis PD -> throttle
+		4, 0, 10 // w turn PD -> pitch
 	});
 
-SimpleLframeMaker sLFM(Pos{0, 0, 5, -1, 0});
+Frame lFrame({0,0,5}, 0);
+
+SimpleLframeMaker sLFM(lFrame);
 Stabilizer stabelizer(wc, controller, gos, sLFM);
 //HoverBehavior hb(alt, 5);
 //Vel_B vb({ 0,0,0,0.2 });
 
+using namespace std::chrono;
 
 int main() {
 	wc.enable();
+	stabelizer.setBaseThrottle(1179);
 	stabelizer.begin();
 
+	//std::this_thread::sleep_for(seconds(5));
+	//lFrame.setOri(PI/2);
+	//sLFM.setLframe(lFrame);
+	std::this_thread::sleep_for(seconds(5));
+	lFrame.pos = { 5,5,5 };
+	sLFM.setLframe(lFrame);
+	std::this_thread::sleep_for(seconds(10));
+	lFrame.pos = { -5,-5,2 };
+	sLFM.setLframe(lFrame);
 	//uint8_t vb_h = stabelizer.addBehavior(vb);
+
 	wc.wait();
 	stabelizer.end();
 	return 0;

@@ -5,12 +5,12 @@
 
 class SimpleLframeMaker : public LframeMaker_I
 {
-	Pos Lframe;
+	Frame Lframe;
 public:
-	SimpleLframeMaker(const Pos& Lframe);
+	SimpleLframeMaker(const Frame& Lframe);
 
 	// Inherited via LframeMaker_I
-	Pos calcLframe() override;
+	Frame calcLframe() override;
 
-	void setLframe(Pos pos) { Lframe = pos; }
+	void setLframe(Frame pos) { Lframe = pos; }
 };
