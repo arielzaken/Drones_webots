@@ -13,7 +13,6 @@
 class WebotsController : public DroneController_I {
 	webots::Supervisor* robot;
 	webots::Altimeter* alt;
-	webots::InertialUnit* imu;
 	webots::Gyro* gyro;
 	webots::Motor* ruMotor;
 	webots::Motor* rdMotor;
@@ -51,14 +50,6 @@ public:
 	WebotsAltSensor(WebotsController& _wc) : wc(&_wc) {}
 	// Inherited via AltSensor
 	float read() override;
-};
-
-class WebotsVelocitySensor : public VelocitySensor {
-	WebotsController* wc;
-public:
-	WebotsVelocitySensor(WebotsController& _wc) : wc(&_wc) {}
-	// Inherited via AltSensor
-	Velocity read() override;
 };
 
 class WebotsGlobalOrientaionSensor : public GlobalOrientaionSensor {

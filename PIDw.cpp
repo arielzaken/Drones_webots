@@ -1,16 +1,15 @@
-#include "PID.h"
+#include "PIDw.h"
 #include "config.h"
 #include "algorithm.cpp"
-#include <chrono>
 
-PID::PID(float p, float i, float d)
+PIDw::PIDw(float p, float i, float d)
     : kp(p), ki(i), kd(d),
     error(0), prev_error(0),
     integral(0), output(0),
     lastTime(std::chrono::system_clock::now()) {
 }
 
-float PID::update(float setpoint, float measured_value)
+float PIDw::update(Vector2d setpoint, Vector2d measured_value)
 {
     // Get the current time and calculate the time difference (dt) in milliseconds
     auto now = std::chrono::system_clock::now();
@@ -28,7 +27,11 @@ float PID::update(float setpoint, float measured_value)
     lastTime = now;
 
     // Calculate the error
-    error = setpoint - measured_value;
+    if(setpoint[X]*measured_value[Y] > measured_value[X] * setpoint[Y])
+        error = std::acos(setpoint.dot(measured_value));
+    else
+        error = -std::acos(setpoint.dot(measured_value));
+    error = 100 * error / ((error - PI) * (error + PI));
 
     // Update the integral term with anti-windup
     integral = clamp(integral + (error * dt), -1, 1);
@@ -44,3 +47,4 @@ float PID::update(float setpoint, float measured_value)
 
     return output;
 }
+

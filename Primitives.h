@@ -2,18 +2,16 @@
 
 #include <Eigen/Dense>
 
-enum{ X, Y, Z, W };
+enum{ X, Y, Z ,Wx, Wy};
 
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 
 using ControllSignal = Eigen::Vector<uint16_t, 4>;
 
-using Pos = Eigen::Vector<float, 4>;
+using Pos = Eigen::Vector<float, 5>;
+using Velocity = Eigen::Vector<float, 4>;
 
-using Velocity = Pos;
-
-using Acceleration = Pos;
 
 using Eigen::Matrix3f;
 using Eigen::Matrix3d;

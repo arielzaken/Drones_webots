@@ -9,7 +9,7 @@ class LframeMaker : public LframeMaker_I
 {
     Behavior_I* behaviors[STABILIZER_NUM_OF_BEHAVIORS];
     uint8_t numOfBehaviors;
-	Pos Lframe;
+    Velocity Lframe;
 public:
     LframeMaker();
     /**

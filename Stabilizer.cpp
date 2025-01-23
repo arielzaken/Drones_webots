@@ -10,10 +10,10 @@ void Stabilizer::stabilizerLoop()
         Pos lFrame = Lframe->calcLframe();
         Pos currPos = GOS->read();
         ControllSignal command = controller->update(lFrame, currPos);
-        droneController->setRoll(command[X]);
-        droneController->setYaw(command[Y]);
-        droneController->setThrottle(command[Z]);
-        droneController->setPitch(command[W]); 
+        droneController->setRoll(command[0]);
+        droneController->setYaw(command[1]);
+        droneController->setThrottle(command[2]);
+        droneController->setPitch(command[3]); 
     }
     std::cout << "Stabilizer stoped\n";
 }

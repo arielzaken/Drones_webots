@@ -1,29 +1,25 @@
-#include "DroneController_I.h"
 #include "webotsController.h"
 #include "Stabilizer.h"
-#include "VelPID.h"
-#include "HoverBehavior.h"
-#include "Vel_B.h"
-
 #include "SimpleLframeMaker.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include "VelPID.h"
 
 WebotsController wc;
 WebotsAltSensor alt(wc);
 WebotsGlobalOrientaionSensor gos(wc);
-
-VelPID velPIDz({
+ 
+VelPID controller({
 		0, 0, 0, // X axis PID -> roll
 		0, 0, 0, // y axis PID -> yaw
-		50, 0.001, 200000, // z axis PID -> throttle
-		0, 0, 0, // w turn PID -> pitch
+		2, 0, 30, // z axis PD -> throttle
+		2, 0, 15, // w turn PD -> pitch
 		1179             // baseThrottle
 	});
 
-SimpleLframeMaker sLFM({0, 0, 5, 0});
-Stabilizer stabelizer(wc, velPIDz, gos, sLFM);
+SimpleLframeMaker sLFM(Pos{0, 0, 5, -1, 0});
+Stabilizer stabelizer(wc, controller, gos, sLFM);
 //HoverBehavior hb(alt, 5);
 //Vel_B vb({ 0,0,0,0.2 });
 

@@ -25,7 +25,7 @@ void WebotsController::loop()
         targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-1, 1]
         targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-1, 1]
         targetPitch = ((pitch - 1500.0) / 500.0) * 0.01;  // Scale from [1000, 2000] to [-1, 1]
-        targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [-1, 1]
+        targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [0, 1]
 
         // Get the current rotational velocities (gyro values in rad/s)
         const double* val = gyro->getValues();
@@ -163,18 +163,12 @@ float WebotsAltSensor::read()
 //    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
 //}
 
-Velocity WebotsVelocitySensor::read()
-{
-    Node* robotNode = wc->robot->getSelf();
-    const double* temp = robotNode->getVelocity();
-    return { (float)temp[X], (float)temp[Y], (float)temp[Z], (float)temp[5]};
-}
-
 Pos WebotsGlobalOrientaionSensor::read()
 {
     Node* robot = wc->robot->getSelf();
     const double* pos = robot->getPosition();
     const double* ori = robot->getOrientation();
-    double ang = std::acos(ori[4]);
-    return Pos{ (float)pos[X], (float)pos[Y], (float)pos[Z], (float)(ori[1] > 0 ? -ang : ang)};
+    double x = ori[1], y = ori[4];
+    double len = std::sqrt(x * x + y * y);
+    return Pos{ (float)pos[X], (float)pos[Y], (float)pos[Z], (float)(x/len), (float)(y/len)};
 }

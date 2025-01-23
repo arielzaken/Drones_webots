@@ -3,6 +3,7 @@
 #include "Controller_I.h"
 #include "Primitives.h"
 #include "PID.h"
+#include "PIDw.h"
 
 typedef struct VelPID_params_t {
 	float kp_x, ki_x, kd_x;
@@ -13,13 +14,14 @@ typedef struct VelPID_params_t {
 } VelPID_params_t;
 
 
-class VelPID : public Controller_I<ControllSignal, Velocity>
+class VelPID : public Controller_I<ControllSignal, Pos>
 {
-	PID pidx, pidy, pidz, pidw;
+	PID pidx, pidy, pidz;
+	PIDw pidw;
 	uint16_t baseThrottle;
 public:
 	VelPID(const VelPID_params_t& params);
 	// Inherited via Controller_I
-	virtual ControllSignal update(Velocity setpoint, Velocity measured_value) override;
+	virtual ControllSignal update(Pos setpoint, Pos measured_value) override;
 };
 

@@ -55,11 +55,11 @@
     <Filter Include="Header Files\Sensors\GlobalOrientaionSensor">
       <UniqueIdentifier>{4877e042-9fa6-4d54-9ede-d27f99569d57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Operator\LframeMaker">
+      <UniqueIdentifier>{6ab6e814-bc48-41c3-b2c0-6bfd501a7af6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="P3I.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
@@ -87,7 +87,19 @@
     <ClCompile Include="WebotsController.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="VelPID_Z.cpp">
+    <ClCompile Include="Vel_B.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleLframeMaker.h">
+      <Filter>Header Files\Operator\LframeMaker</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleLframeMaker.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="VelPID.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Accelerometer.cpp">
@@ -192,10 +204,7 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\VacuumGripper.cpp">
       <Filter>Source Files\webots</Filter>
     </ClCompile>
-    <ClCompile Include="Vel_B.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="LframeMaker.cpp">
+    <ClCompile Include="PIDw.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -254,22 +263,20 @@
     <ClInclude Include="AltSensor.h">
       <Filter>Header Files\Sensors\AltSensor</Filter>
     </ClInclude>
-    <ClInclude Include="VelPID_Z.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Vel_B.h">
       <Filter>Header Files\Operator\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="GlobalOrientaionSensor.h">
       <Filter>Header Files\Sensors\GlobalOrientaionSensor</Filter>
     </ClInclude>
-    <ClInclude Include="LframeMaker.h">
-      <Filter>Header Files\Operator\Operator</Filter>
+    <ClInclude Include="VelPID.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Makefile">
-      <Filter>Source Files\webots</Filter>
-    </None>
+    <ClInclude Include="PIDw.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="LframeMaker_I.h">
+      <Filter>Header Files\Operator\LframeMaker</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
