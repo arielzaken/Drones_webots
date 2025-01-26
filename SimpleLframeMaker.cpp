@@ -2,11 +2,11 @@
 
 Frame SimpleLframeMaker::calcLframe()
 {
-    return Lframe;
+    return lFrame;
 }
 
 
-SimpleLframeMaker::SimpleLframeMaker(const Frame& Lframe)
-    : Lframe(Lframe)
+SimpleLframeMaker::SimpleLframeMaker(const Frame& lFrame)
+    : lFrame(lFrame)
 {
 }

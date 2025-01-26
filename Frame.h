@@ -23,6 +23,7 @@ struct Frame {
 	}
 
 	void setOri(double ang);
+	void rotate(double ang);
 
 	friend std::ostream& operator<<(std::ostream& o, const Frame& frame);
 };

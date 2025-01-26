@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\TouchSensor.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\VacuumGripper.cpp" />
     <ClCompile Include="algorithm.cpp" />
+    <ClCompile Include="BehaviorLFrameMaker.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="HoverBehavior.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AltSensor.h" />
+    <ClInclude Include="BehaviorLFrameMaker.h" />
     <ClInclude Include="Behavior_I.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Controller_I.h" />

@@ -15,7 +15,7 @@ class Stabilizer
     DroneController_I* droneController;
     Controller_t* controller;
     GlobalOrientaionSensor* GOS;
-    LframeMaker_I* Lframe;
+    LframeMaker_I* lFrameMaker;
     uint16_t baseThrottle = 1000;
 
     std::thread* task = nullptr;
@@ -29,7 +29,7 @@ public:
         DroneController_I& _droneController,
         Controller_t& _controller,
         GlobalOrientaionSensor& _GOS,
-        LframeMaker_I& Lframe
+        LframeMaker_I& lFrame
         );
     void setBaseThrottle(uint16_t bt) { baseThrottle = bt; }
     void begin();

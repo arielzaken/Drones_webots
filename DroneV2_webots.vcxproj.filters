@@ -60,16 +60,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="P3I.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="Stabilizer.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="PID.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="VelP3I.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="HoverBehavior.cpp">
@@ -93,119 +87,125 @@
     <ClCompile Include="SimpleLframeMaker.h">
       <Filter>Header Files\Operator\LframeMaker</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SimpleLframeMaker.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="VelPID.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Accelerometer.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Altimeter.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Brake.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Camera.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Compass.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Connector.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Device.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Display.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\DistanceSensor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Emitter.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Field.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\GPS.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Gyro.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\InertialUnit.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Joystick.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Keyboard.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\LED.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Lidar.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\LightSensor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Motion.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Motor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Mouse.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Node.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Pen.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\PositionSensor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Radar.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\RangeFinder.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Receiver.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Robot.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Skin.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Speaker.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\Supervisor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\TouchSensor.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\..\..\Program Files\Webots\src\controller\cpp\VacuumGripper.cpp">
-      <Filter>Source Files\webots</Filter>
-    </ClCompile>
     <ClCompile Include="PIDw.cpp">
       <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Accelerometer.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Altimeter.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Brake.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Camera.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Compass.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Connector.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Device.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Display.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\DistanceSensor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Emitter.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Field.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\GPS.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Gyro.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\InertialUnit.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Joystick.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Keyboard.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\LED.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Lidar.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\LightSensor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Motion.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Motor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Mouse.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Node.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Pen.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\PositionSensor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Radar.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\RangeFinder.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Receiver.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Robot.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Skin.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Speaker.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\Supervisor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\TouchSensor.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Program Files (x86)\Webots\src\controller\cpp\VacuumGripper.cpp">
+      <Filter>Source Files\webots</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviorLFrameMaker.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,17 +245,11 @@
     <ClInclude Include="PID.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="VelP3I.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="States.h">
       <Filter>Header Files\Operator\Operator</Filter>
     </ClInclude>
     <ClInclude Include="Stabilizer.h">
       <Filter>Header Files\Operator\Operator</Filter>
-    </ClInclude>
-    <ClInclude Include="P3I.h">
-      <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="webotsController.h">
       <Filter>Header Files\DroneController</Filter>
@@ -276,6 +270,12 @@
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="LframeMaker_I.h">
+      <Filter>Header Files\Operator\LframeMaker</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviorLFrameMaker.h">
       <Filter>Header Files\Operator\LframeMaker</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,8 +8,8 @@ void Stabilizer::stabilizerLoop()
     std::cout << "Stabilizer started!\n";
     while(isRunning) {
         Frame currPos = GOS->read();
-        Frame lFrame = Lframe->calcLframe();
-        //std::cout << lFrame << std::endl;
+        Frame lFrame = lFrameMaker->calcLframe();
+        std::cout << lFrame << std::endl;
         ControllSignal command = controller->update(lFrame, currPos);
         command.block<2, 1>(0, 0) = (currPos.ori * (command.block<2, 1>(0, 0)).cast<double>()).cast<int16_t>();
         droneController->setRoll(1500 + command[0]);
@@ -24,7 +24,7 @@ Stabilizer::Stabilizer(DroneController_I& _droneController, Controller_t& _contr
     droneController(&_droneController),
     controller(&_controller),
     GOS(&_GOS),
-    Lframe(&_Lframe)
+    lFrameMaker(&_Lframe)
 {
 }
 

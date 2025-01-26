@@ -3,7 +3,7 @@
 Frame::Frame()
 {
 	pos.Zero();
-	ori.Identity();
+	ori << 1,0,0,1;
 }
 
 Frame::Frame(Vector3d pos, double angle) :
@@ -19,6 +19,17 @@ void Frame::setOri(double ang)
 	ori <<
 		c, -s,
 		s, c;
+}
+
+void Frame::rotate(double ang)
+{
+	double c = cos(ang);
+	double s = sin(ang);
+	Matrix2d R;
+	R <<
+		c, s,
+		-s, c;
+	ori = R * ori;
 }
 
 std::ostream& operator<<(std::ostream& o, const Frame& frame)
