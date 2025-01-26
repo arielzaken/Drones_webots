@@ -4,6 +4,7 @@
 #include "LframeMaker_I.h"
 #include "Primitives.h"
 #include "vector"
+#include "mutex"
 
 using BehaviorHandle_t = std::vector<Behavior_I*>::iterator;
 
@@ -11,6 +12,7 @@ class BehaviorLFrameMaker : public LframeMaker_I
 {
 	Frame lFrame;
 	std::vector<Behavior_I*> behaviors;
+	std::mutex mtx;
 public:
 	BehaviorLFrameMaker() = default;
 	BehaviorLFrameMaker(const Frame& lFrame);

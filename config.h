@@ -7,52 +7,9 @@
 //#define DEBUG_PRINT_SERIAL HardwareSerial
 
 //#define DEBUG_PRINT_SERIAL ??????
-# define PI           3.14159265358979323846  /* pi */
-
-#define DEBUG_PRINT_DELAY 200
-
-/*************************
- * HEIGHT CHANNEL CONFIG *
- ************************/
-#define HEIGHT_CHANNEL 200 // [cm] the height of the craft at transit
-
-/******************
- * ALT PID CONFIG *
- *****************/
-#define MAX_ALT 400 // [cm] the maximum altitude allowed for the craft
-//#define H 5.0 // [m] the target altitude for the craft to hover over
-
-#define TOF_PID_P 10
-#define TOF_PID_I 1
-#define TOF_PID_D 1
-#define TOF_PID TOF_PID_P, TOF_PID_I, TOF_PID_D
-
-#define TRN_PID_P 8
-#define TRN_PID_I 1
-#define TRN_PID_D 6
-#define TRN_PID TRN_PID_P, TRN_PID_I, TRN_PID_D
-
-#define LND_PID_P 8
-#define LND_PID_I 2
-#define LND_PID_D 5
-#define LND_PID LND_PID_P, LND_PID_I, LND_PID_D
-
-#define LIMIT 100
-
-#define BASE_THROTTLE 1260
-
-/******************
- *   GPS CONFIG   *
- *****************/
-#define ERROR_RADIUS 300 // [cm] the error radius in which two locations are considered the same
 
 
-/*******************
- * ALTITUDE CONFIG *
- ******************/
-#define ALTITUDE_ERROR_RANGE 20     // [cm] the error radius in which the alttitude is equals
-#define LAND_DECREACE_RATE 0.1      // [m] 
-#define LAND_DISABLE_MOTORS_HEIGHT 50 // [mm]
+#define DEBUG_PRINT_DELAY 200 
 
 /**************
  * MSP CONFIG *
@@ -108,21 +65,18 @@
 
 #define AUX_DEFAULT_VALUE 1500
 
-/******************
- * transit CONFIG *
- *****************/
-#define STOP_YAW 1500
-#define FORWARD_YAW STOP_YAW + 40
-#define BACKWARDS_YAW STOP_YAW - 40
-
-#define STABILIZER_NUM_OF_BEHAVIORS 4
-
-
 /****************
 * webots CONFIG *
 ****************/
 #define TIME_STEP 32
 #define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0) 
 
+#define YAW_PID_CONFIG  0.05, 0.001, 0.01
+#define ROLL_PID_CONFIG 0.05, 0.001, 0.01
+
+/***********
+* CONSTANS *
+***********/
+#define PI           3.14159265358979323846  /* pi */
 
 #endif // _CONFIG_H

@@ -7,44 +7,30 @@
 
 using namespace webots;
 
-constexpr auto Kp = 0.05;
-constexpr auto Kd = 0.01;
-
-#define REALL_TIME_STEP (TIME_STEP/1000.0) 
-# define PI           3.14159265358979323846  /* pi */
-
 void WebotsController::loop()
 {
     double targetPitch, targetRoll, targetYaw, targetThrottle;
-    double prevErrorPitch = 0, prevErrorRoll = 0, prevErrorYaw = 0;
-    double angx = 0, angy = 0, angz = 0;
+    double angx = 0, angy = 0;
     const double maxVel = luMotor->getMaxVelocity();
     while (robot->step(TIME_STEP) != -1) {
 
         // Normalize inputs to the range [-1, 1] for target control
-        targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-1, 1]
-        targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-1, 1]
-        targetPitch = ((pitch - 1500.0) / 500.0) * 0.01;  // Scale from [1000, 2000] to [-1, 1]
+        targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-PI / 4, PI / 4]
+        targetRoll = ((roll - 1500.0) / 500.0) * (PI / 4);    // Scale from [1000, 2000] to [-PI / 4, PI / 4]
+        targetPitch = ((pitch - 1500.0) / 500.0) * 0.01;  // Scale from [1000, 2000] to [-0.01, 0.01]
         targetThrottle = (throttle - 1000.0) / 1000.0;  // Scale from [1000, 2000] to [0, 1]
 
         // Get the current rotational velocities (gyro values in rad/s)
         const double* val = gyro->getValues();
         double rVelx = val[0]; // Pitch rate (rad/s) 
         double rVely = val[1]; // Roll rate (rad/s) 
-        double rVelz = val[2]; // Yaw rate (rad/s)
-        angx += rVelx * REALL_TIME_STEP;
-        angy += rVely * REALL_TIME_STEP;
-        // Calculate errors between target and current gyro values
-        double errorYaw = targetYaw - angx;
-        double errorRoll = targetRoll - angy;
 
-        // Derivative terms to account for rate of change of error
-        double dErrorYaw = (errorYaw - prevErrorYaw) / REALL_TIME_STEP;
-        double dErrorRoll = (errorRoll - prevErrorRoll) / REALL_TIME_STEP;
+        angx += rVelx * WEBOTS_STEP_TIME_MS;
+        angy += rVely * WEBOTS_STEP_TIME_MS;
 
-        // PD control calculations for pitch, roll, and yaw
-        double correctionYaw = Kp * errorYaw + Kd * dErrorYaw;
-        double correctionRoll = Kp * errorRoll + Kd * dErrorRoll;
+        // PID control calculations for roll, and yaw
+        double correctionYaw = yawPID.update(targetYaw, angx);
+        double correctionRoll = rollPID.update(targetRoll, angy);
 
         // Motor mixing to adjust motor velocities based on corrections
         double luv = clamp(targetThrottle - targetPitch + correctionRoll + correctionYaw, -1, 1) * maxVel;
@@ -57,15 +43,13 @@ void WebotsController::loop()
         luMotor->setVelocity(luv);   // Left upper motor
         rdMotor->setVelocity(rdv);   // Right down motor
         ldMotor->setVelocity(-ldv);  // Left down motor
-
-        // Store previous errors for derivative calculation in next loop
-        prevErrorRoll = errorRoll;
-        prevErrorYaw = errorYaw;
     }
 
 }
 
-WebotsController::WebotsController()
+WebotsController::WebotsController():
+    yawPID(YAW_PID_CONFIG),
+    rollPID(ROLL_PID_CONFIG)
 {
     robot = new Supervisor();
     alt = robot->getAltimeter("altimeter");

@@ -5,6 +5,7 @@
 #include "GlobalOrientaionSensor.h"
 
 #include <webots/Supervisor.hpp>
+#include "PID.h" 
 
 #include <thread>
 
@@ -24,6 +25,9 @@ class WebotsController : public DroneController_I {
 	uint16_t pitch = 1500;
 	uint16_t yaw = 1500;
 	uint16_t roll = 1500;
+
+	PID yawPID;
+	PID rollPID;
 public:
 	WebotsController();
 	~WebotsController();
