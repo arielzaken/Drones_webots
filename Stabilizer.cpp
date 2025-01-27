@@ -9,7 +9,6 @@ void Stabilizer::stabilizerLoop()
     while(isRunning) {
         Frame currPos = GOS->read();
         Frame lFrame = lFrameMaker->calcLframe();
-        std::cout << lFrame << std::endl;
         ControllSignal command = controller->update(lFrame, currPos);
         command.block<2, 1>(0, 0) = (currPos.ori * (command.block<2, 1>(0, 0)).cast<double>()).cast<int16_t>();
         droneController->setRoll(1500 + command[0]);

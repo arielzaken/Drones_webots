@@ -22,6 +22,7 @@ Frame BehaviorLFrameMaker::calcLframe()
     last = now;
     lFrame.pos += (vel.block<3, 1>(0, 0)).cast<double>() * dt;
     lFrame.rotate(vel[3] * dt);
+    std::cout << lFrame << std::endl;
     return lFrame;
 }
 
@@ -30,18 +31,18 @@ BehaviorLFrameMaker::BehaviorLFrameMaker(const Frame& lFrame)
 {
 }
 
-BehaviorHandle_t BehaviorLFrameMaker::addBehavior(Behavior_I& b)
+void BehaviorLFrameMaker::addBehavior(Behavior_I& b)
 {
+    b.setup();
     mtx.lock();
     behaviors.push_back(&b);
     mtx.unlock();
-    return --behaviors.end();
 }
 
-void BehaviorLFrameMaker::removeBehavior(BehaviorHandle_t index)
+void BehaviorLFrameMaker::removeBehavior(Behavior_I& b)
 {
     mtx.lock();
-    behaviors.erase(index);
+    behaviors.remove(&b);
     mtx.unlock();
 }
 
