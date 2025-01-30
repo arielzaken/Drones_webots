@@ -11,9 +11,9 @@ VelPID::VelPID(const VelPID_params_t& params) :
 ControllSignal VelPID::update(Frame to, Frame value)
 {
     ControllSignal res;
-    res[X] = pidx.update(to.pos[X], value.pos[X]);
-    res[Y] = pidy.update(to.pos[Y], value.pos[Y]);
-    res[Z] = pidz.update(to.pos[Z], value.pos[Z]);
-    res[3] = pidw.update(to.ori, value.ori);
+    res[X] = (int16_t)pidx.update(to.pos[X], value.pos[X]);
+    res[Y] = (int16_t)pidy.update(to.pos[Y], value.pos[Y]);
+    res[Z] = (int16_t)pidz.update(to.pos[Z], value.pos[Z]);
+    res[3] = (int16_t)pidw.update(to.ori, value.ori);
     return res;
 }

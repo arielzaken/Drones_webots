@@ -1,25 +1,19 @@
 #pragma once
 #include "DroneController_I.h"
-#include "AltSensor.h"
-#include "VelocitySensor.h"
-#include "GlobalOrientaionSensor.h"
-
-#include <webots/Supervisor.hpp>
-#include "PID.h" 
-
+#include <webots/Robot.hpp>
 #include <thread>
-
+#include "PID.h" 
 #include "config.h"
 
 class WebotsController : public DroneController_I {
-	webots::Supervisor* robot;
-	webots::Altimeter* alt;
+	webots::Robot* robot;
 	webots::Gyro* gyro;
 	webots::Motor* ruMotor;
 	webots::Motor* rdMotor;
 	webots::Motor* luMotor;
 	webots::Motor* ldMotor;
 	std::thread* pThread = nullptr;
+	bool isRunning = false;
 	void loop();
 	uint16_t throttle = 1000;
 	uint16_t pitch = 1500;
@@ -42,24 +36,7 @@ public:
 	void disable() override;
 	void enable() override;
 	void wait();
-	bool isRunning() { return pThread != nullptr; }
-	friend class WebotsAltSensor;
-	friend class WebotsVelocitySensor;
-	friend class WebotsGlobalOrientaionSensor;
+	bool checkIsRunning() const { return isRunning; }
+	webots::Robot* getRobot() { return robot; };
 };
 
-class WebotsAltSensor : public AltSensor {
-	WebotsController* wc;
-public:
-	WebotsAltSensor(WebotsController& _wc) : wc(&_wc) {}
-	// Inherited via AltSensor
-	float read() override;
-};
-
-class WebotsGlobalOrientaionSensor : public GlobalOrientaionSensor {
-	WebotsController* wc;
-public:
-	WebotsGlobalOrientaionSensor(WebotsController& _wc) : wc(&_wc) {}
-	// Inherited via AltSensor
-	Frame read() override;
-};

@@ -7,6 +7,11 @@ enum{ X, Y, Z };
 
 using Eigen::Vector2d;
 using Eigen::Vector3d;
+using Vector4d = Eigen::Vector<double, 4>;
+
+using Eigen::Vector2f;
+using Eigen::Vector3f;
+using Vector4f = Eigen::Vector<float, 4>;
 
 using ControllSignal = Eigen::Vector<int16_t, 4>;
 

@@ -1,6 +1,4 @@
 #include "webotsController.h"
-#include <webots/DistanceSensor.hpp>
-#include <webots/Altimeter.hpp>
 #include <webots/Motor.hpp>
 #include <webots/Gyro.hpp>
 #include "algorithm.cpp"
@@ -12,7 +10,7 @@ void WebotsController::loop()
     double targetPitch, targetRoll, targetYaw, targetThrottle;
     double angx = 0, angy = 0;
     const double maxVel = luMotor->getMaxVelocity();
-    while (robot->step(TIME_STEP) != -1) {
+    while (robot->step(TIME_STEP) != -1 && isRunning) {
 
         // Normalize inputs to the range [-1, 1] for target control
         targetYaw = -((yaw - 1500.0) / 500.0) * (PI / 4);      // Scale from [1000, 2000] to [-PI / 4, PI / 4]
@@ -44,16 +42,15 @@ void WebotsController::loop()
         rdMotor->setVelocity(rdv);   // Right down motor
         ldMotor->setVelocity(-ldv);  // Left down motor
     }
-
+    isRunning = false;
 }
 
 WebotsController::WebotsController():
     yawPID(YAW_PID_CONFIG),
     rollPID(ROLL_PID_CONFIG)
 {
-    robot = new Supervisor();
-    alt = robot->getAltimeter("altimeter");
-    alt->enable(TIME_STEP);
+    robot = new Robot();
+
     gyro = robot->getGyro("gyro");
     gyro->enable(TIME_STEP);
 
@@ -117,7 +114,9 @@ void WebotsController::disarm()
 
 void WebotsController::disable()
 {
-    if (pThread) {
+    if (isRunning) {
+        isRunning = false;
+        pThread->join();
         delete pThread;
         pThread = nullptr;
     }
@@ -125,7 +124,8 @@ void WebotsController::disable()
 
 void WebotsController::enable()
 {
-    if (!pThread) {
+    if (!isRunning) {
+        isRunning = true;
         pThread = new std::thread(&WebotsController::loop, this);
     }
 }
@@ -135,28 +135,4 @@ void WebotsController::wait()
     pThread->join();
 }
 
-float WebotsAltSensor::read()
-{
-    return (float)wc->alt->getValue();
-}
 
-//Velocity WebotsVelocitySensor::read()
-//{
-//    Node* robotNode = wc->robot->getSelf();
-//    const double* vel = robotNode->getVelocity();
-//    return { (float)vel[0], (float)vel[1], (float)vel[2], (float)vel[5] };
-//}
-
-Frame WebotsGlobalOrientaionSensor::read()
-{
-    Node* robot = wc->robot->getSelf();
-    MCVector3d pos(robot->getPosition());
-    MCMatrix3d ori(robot->getOrientation());
-    double x = ori(1), y = ori(4);
-    double len = std::sqrt(x * x + y * y);
-    x = (x / len);
-    y = (y / len);
-    Matrix2d R;
-    R << y, -x, x, y;
-    return Frame( pos, R );
-}

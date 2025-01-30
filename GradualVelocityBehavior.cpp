@@ -15,7 +15,7 @@ inline double GradualVelocityBehavior::F(double t) {
 Velocity GradualVelocityBehavior::calcBehavior()
 {
     auto now = system_clock::now();
-    auto time = duration_cast<seconds>(now - last).count(); 
+    double time = duration_cast<milliseconds>(now - last).count() / 1000.0; 
     if (time <= timeInterval)
         return vel * F(time);
     return {0,0,0,0};

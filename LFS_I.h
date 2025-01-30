@@ -3,4 +3,5 @@
 #include "Sensor_I.h"
 #include "Primitives.h"
 
-class GlobalOrientaionSensor : public Sensor_I<Frame> {};
+// LFrame Sensor 
+class LFS_I : public Sensor_I<Frame> {};

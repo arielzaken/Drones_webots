@@ -6,7 +6,7 @@ Frame::Frame()
 	ori << 1,0,0,1;
 }
 
-Frame::Frame(Vector3d pos, double angle) :
+Frame::Frame(Vector3f pos, double angle) :
 	pos(pos)
 {
 	setOri(angle);
@@ -14,8 +14,8 @@ Frame::Frame(Vector3d pos, double angle) :
 
 void Frame::setOri(double ang)
 {
-	double c = cos(ang);
-	double s = sin(ang);
+	float c = (float)cos(ang);
+	float s = (float)sin(ang);
 	ori <<
 		c, -s,
 		s, c;
@@ -23,9 +23,9 @@ void Frame::setOri(double ang)
 
 void Frame::rotate(double ang)
 {
-	double c = cos(ang);
-	double s = sin(ang);
-	Matrix2d R;
+	float c = (float)cos(ang);
+	float s = (float)sin(ang);
+	Matrix2f R;
 	R <<
 		c, s,
 		-s, c;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Behavior_I.h"
 #include "DroneController_I.h"
-#include "GlobalOrientaionSensor.h"
+#include "LFS_I.h"
 #include "Controller_I.h"
 #include "LframeMaker_I.h"
 #include "config.h"
@@ -14,7 +14,7 @@ class Stabilizer
    
     DroneController_I* droneController;
     Controller_t* controller;
-    GlobalOrientaionSensor* GOS;
+    LFS_I* GOS;
     LframeMaker_I* lFrameMaker;
     uint16_t baseThrottle = 1000;
 
@@ -28,7 +28,7 @@ public:
     Stabilizer(
         DroneController_I& _droneController,
         Controller_t& _controller,
-        GlobalOrientaionSensor& _GOS,
+        LFS_I& _GOS,
         LframeMaker_I& lFrame
         );
     void setBaseThrottle(uint16_t bt) { baseThrottle = bt; }
