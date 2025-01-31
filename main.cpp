@@ -10,7 +10,7 @@
 #include "webotsController.h"
 #include "WebotsAltSensor.h"
 #include "WebotsGPS.h"
-#include "WebotsCompass.h"
+#include "WebotsIMU.h"
 #include "GPS_COM_LFS.h"
 
 /* stabelizer and Lframe maker *///----------------------------------
@@ -27,8 +27,8 @@
 WebotsController wc;
 WebotsAltSensor alt(wc, "altimeter");
 WebotsGPS gps(wc, "gps");
-WebotsCompass com(wc, "compass");
-GPS_COM_LFS gos(gps, com);
+WebotsIMU imu(wc, "inertial unit");
+GPS_IMU_LFS gos(gps, imu);
 
 //VelPID controller({
 //		50, 1, 40, // X axis PID -> roll

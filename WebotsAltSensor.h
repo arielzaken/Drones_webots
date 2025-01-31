@@ -5,7 +5,7 @@
 
 class WebotsController;
 
-class WebotsAltSensor : public AltSensor {
+class WebotsAltSensor : public AltSensor_I {
 	webots::Altimeter* alt;
 public:
 	WebotsAltSensor(WebotsController& _wc, const char* name);

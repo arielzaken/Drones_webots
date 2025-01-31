@@ -194,6 +194,8 @@
     <ClCompile Include="GPS_COM_LFS.cpp" />
     <ClCompile Include="WebotsGPS.cpp" />
     <ClCompile Include="WebotsGPS.h" />
+    <ClCompile Include="WebotsGyro.cpp" />
+    <ClCompile Include="WebotsIMU.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AltSensor.h" />
@@ -205,6 +207,8 @@
     <ClInclude Include="DistanceSensor.h" />
     <ClInclude Include="DroneController_I.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="Gyro_I.h" />
+    <ClInclude Include="IMU_I.h" />
     <ClInclude Include="LFS_I.h" />
     <ClInclude Include="GPS_I.h" />
     <ClInclude Include="GradualVelocityBehavior.h" />
@@ -224,6 +228,8 @@
     <ClInclude Include="WebotsAltSensor.h" />
     <ClInclude Include="webotsController.h" />
     <ClInclude Include="GPS_COM_LFS.h" />
+    <ClInclude Include="WebotsGyro.h" />
+    <ClInclude Include="WebotsIMU.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
