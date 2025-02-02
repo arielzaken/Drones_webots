@@ -69,7 +69,7 @@
 * webots CONFIG *
 ****************/
 #define TIME_STEP 32
-#define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0) 
+#define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0)
 
 #define YAW_PID_CONFIG  0.05, 0.001, 0.01
 #define ROLL_PID_CONFIG 0.05, 0.001, 0.01

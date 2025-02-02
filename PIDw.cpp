@@ -29,9 +29,9 @@ float PIDw::update(const Matrix2f& setpoint, const Matrix2f& measured_value)
     Vector2f b = measured_value.row(0);
     // Calculate the error
     if(a[X] * b[Y] > b[X] * a[Y])
-        error = std::acos(a.dot(b));
-    else
         error = -std::acos(a.dot(b));
+    else
+        error = std::acos(a.dot(b));
     error = 100 * error / ((error - PI) * (error + PI));
 
     // Update the integral term with anti-windup

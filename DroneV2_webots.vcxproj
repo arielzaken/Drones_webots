@@ -178,13 +178,12 @@
     <ClCompile Include="GradualVelocityBehavior.cpp" />
     <ClCompile Include="HoverBehavior.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="ObsticalAvoidanseBehavior.cpp" />
     <ClCompile Include="PID.cpp" />
     <ClCompile Include="PIDw.cpp" />
     <ClCompile Include="SimpleLframeMaker.cpp" />
     <ClCompile Include="SimpleLframeMaker.h" />
     <ClCompile Include="Stabilizer.cpp" />
-    <ClCompile Include="States.cpp" />
     <ClCompile Include="VelPID.cpp" />
     <ClCompile Include="Vel_B.cpp" />
     <ClCompile Include="WebotsAltSensor.cpp" />
@@ -192,6 +191,7 @@
     <ClCompile Include="WebotsCompass.h" />
     <ClCompile Include="WebotsController.cpp" />
     <ClCompile Include="GPS_COM_LFS.cpp" />
+    <ClCompile Include="WebotsDistanceSensor.cpp" />
     <ClCompile Include="WebotsGPS.cpp" />
     <ClCompile Include="WebotsGPS.h" />
     <ClCompile Include="WebotsGyro.cpp" />
@@ -204,7 +204,7 @@
     <ClInclude Include="Compass_I.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Controller_I.h" />
-    <ClInclude Include="DistanceSensor.h" />
+    <ClInclude Include="DistanceSensor_I.h" />
     <ClInclude Include="DroneController_I.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Gyro_I.h" />
@@ -214,20 +214,20 @@
     <ClInclude Include="GradualVelocityBehavior.h" />
     <ClInclude Include="HoverBehavior.h" />
     <ClInclude Include="LframeMaker_I.h" />
-    <ClInclude Include="Operator.h" />
+    <ClInclude Include="ObsticalAvoidanseBehavior.h" />
     <ClInclude Include="PID.h" />
     <ClInclude Include="PIDw.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="SensorCashProxy.h" />
     <ClInclude Include="Sensor_I.h" />
     <ClInclude Include="Stabilizer.h" />
-    <ClInclude Include="States.h" />
     <ClInclude Include="VelocitySensor.h" />
     <ClInclude Include="VelPID.h" />
     <ClInclude Include="Vel_B.h" />
     <ClInclude Include="WebotsAltSensor.h" />
     <ClInclude Include="webotsController.h" />
     <ClInclude Include="GPS_COM_LFS.h" />
+    <ClInclude Include="WebotsDistanceSensor.h" />
     <ClInclude Include="WebotsGyro.h" />
     <ClInclude Include="WebotsIMU.h" />
   </ItemGroup>

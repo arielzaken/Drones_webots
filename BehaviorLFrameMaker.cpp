@@ -14,7 +14,7 @@ Frame BehaviorLFrameMaker::calcLframe()
     mtx.unlock();
     auto now = system_clock::now();
 #ifdef WEBOTS_STEP_TIME_MS
-    float dt = (float)WEBOTS_STEP_TIME_MS;
+    float dt = WEBOTS_STEP_TIME_MS;
 #else
     auto dt = duration_cast<milliseconds>(now - last).count(); 
 #endif // WEBOTS_STEP_TIME_MS

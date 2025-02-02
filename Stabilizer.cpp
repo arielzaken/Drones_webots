@@ -38,10 +38,10 @@ void Stabilizer::begin()
 void Stabilizer::end()
 {
     if (isRunning && task) {
+        isRunning = false;
         task->join();
         delete task;
         task = nullptr;
-        isRunning = false;
     }
 }
 
