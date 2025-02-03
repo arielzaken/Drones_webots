@@ -10,7 +10,7 @@ void Stabilizer::stabilizerLoop()
         Frame currPos = GOS->read();
         Frame lFrame = lFrameMaker->calcLframe();
         ControllSignal command = controller->update(lFrame, currPos);
-        command.block<2, 1>(0, 0) = (currPos.ori * (command.block<2, 1>(0, 0)).cast<float>()).cast<int16_t>();
+        command.block<2, 1>(0, 0) = (currPos.ori.transpose() * (command.block<2, 1>(0, 0)).cast<float>()).cast<int16_t>();
         droneController->setRoll(1500 + command[0]);
         droneController->setYaw(1500 + command[1]);
         droneController->setThrottle(baseThrottle + command[2]);

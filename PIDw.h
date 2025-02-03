@@ -9,7 +9,6 @@ class PIDw : public Controller_I<float, const Matrix2f&> {
 	float kp, ki, kd;
 	float error, prev_error, integral;
 	float output;
-	std::chrono::system_clock::time_point lastTime;
 public:
 	PIDw(float p, float i, float d);
 	float update(const Matrix2f& setpoint, const Matrix2f& measured_value) override;

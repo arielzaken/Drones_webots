@@ -6,23 +6,15 @@ using namespace std::chrono;
 
 Frame BehaviorLFrameMaker::calcLframe()
 {
-    static system_clock::time_point last = system_clock::now();
     Velocity vel = { 0,0,0,0 };
     mtx.lock();
     for (auto i = behaviors.begin(); i != behaviors.end(); i++)
         vel += (*i)->calcBehavior();
     mtx.unlock();
-    auto now = system_clock::now();
-#ifdef WEBOTS_STEP_TIME_MS
-    float dt = WEBOTS_STEP_TIME_MS;
-#else
-    auto dt = duration_cast<milliseconds>(now - last).count(); 
-#endif // WEBOTS_STEP_TIME_MS
-
-    last = now;
+    getDt;
     lFrame.pos += vel.block<3, 1>(0, 0) * dt;
     lFrame.rotate(vel[3] * dt);
-    std::cout << lFrame << std::endl;
+    //std::cout << lFrame << std::endl;
     return lFrame;
 }
 

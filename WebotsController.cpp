@@ -23,8 +23,10 @@ void WebotsController::loop()
         double rVelx = val[0]; // Pitch rate (rad/s) 
         double rVely = val[1]; // Roll rate (rad/s) 
 
-        angx += rVelx * WEBOTS_STEP_TIME_MS;
-        angy += rVely * WEBOTS_STEP_TIME_MS;
+        getDt;
+
+        angx += rVelx * dt;
+        angy += rVely * dt;
 
         // PID control calculations for roll, and yaw
         double correctionYaw = yawPID.update(targetYaw, angx);

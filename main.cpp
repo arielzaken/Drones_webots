@@ -16,7 +16,7 @@
 
 /* stabelizer and Lframe maker *///----------------------------------
 #include "Stabilizer.h"
-//#include "SimpleLframeMaker.h"
+#include "SimpleLframeMaker.h"
 #include "BehaviorLFrameMaker.h"
 
 /* behaviors */
@@ -45,22 +45,22 @@ DistanceSensor_I* disR[] = {
 GPS_IMU_LFS gos(gps, imu);
 
 VelPID controller({
-		50, 1, 40, // X axis PID -> roll
-		50, 1, 40, // y axis PID -> yaw
-		15, 1, 25, // z axis PID -> throttle
-		10, 0.1, 10 // w turn PID -> pitch
+		50, 0, 40, // X axis PID -> roll
+		50, 0, 40, // y axis PID -> yaw
+		15, 1, 20, // z axis PID -> throttle
+		50, 0, 45 // w turn PIDw -> pitch
 	});
 
-//Frame lFrame({0,0,5}, 0); pwsh.exe
-//
-//SimpleLframeMaker sLFM(lFrame);
+//Frame lFrame1({ 0,0,5 }, -PI / 2);
+//Frame lFrame2({ 0,0,5 }, 0);
+
+//SimpleLframeMaker sLFM(lFrame2);
 
 BehaviorLFrameMaker bLFM;
 HoverBehavior hb(alt, 5);
-Vel_B vb({ 0,0,0,0.2 });
-Vel_B vt({ 1,-1,0,0 });
-ObsticalAvoidanseBehavior oab(disR);
-GradualVelocityBehavior gvb({ 5, -5, 0, 0 }, 5);
+Vel_B vb({ 0.5,0,0,0.5 });
+//Vel_B vt({ 1,-1,0,0 });
+//ObsticalAvoidanseBehavior oab(disR);
 
 Stabilizer stabelizer(wc, controller, gos, bLFM);
 
@@ -71,14 +71,11 @@ int main() {
 	stabelizer.setBaseThrottle(1179);
 	stabelizer.begin();
 	bLFM.addBehavior(hb);
-	bLFM.addBehavior(oab);
+	////bLFM.addBehavior(oab);
 	std::this_thread::sleep_for(seconds(3));
-	//bLFM.addBehavior(vb);
-	//std::this_thread::sleep_for(seconds(5));
-	//bLFM.removeBehavior(vb);
-	bLFM.addBehavior(gvb);
-	std::this_thread::sleep_for(seconds(5));
-	bLFM.removeBehavior(gvb);
+	bLFM.addBehavior(vb);
+	std::this_thread::sleep_for(seconds(15));
+	bLFM.removeBehavior(vb);
 
 	wc.wait();
 	stabelizer.end();

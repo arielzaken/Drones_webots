@@ -69,7 +69,19 @@
 * webots CONFIG *
 ****************/
 #define TIME_STEP 32
-#define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0)
+
+#ifdef TIME_STEP
+#define WEBOTS_STEP_TIME_MS (TIME_STEP/1000.0f)
+#endif // TIME_STEP
+
+#ifdef WEBOTS_STEP_TIME_MS
+#define getDt float dt = WEBOTS_STEP_TIME_MS;
+#else
+#define getDt static auto GET_DT_LASTTIME_TEMP123 = std::chrono::system_clock::now(); \
+auto GET_DT_NOW_TEMP123 = std::chrono::system_clock::now(); \
+float dt = std::chrono::duration_cast<std::chrono::milliseconds>(GET_DT_NOW_TEMP123 - GET_DT_LASTTIME_TEMP123).count() / 1000.0f; \
+GET_DT_LASTTIME_TEMP123 = GET_DT_NOW_TEMP123
+#endif // WEBOTS_STEP_TIME_MS
 
 #define YAW_PID_CONFIG  0.05, 0.001, 0.01
 #define ROLL_PID_CONFIG 0.05, 0.001, 0.01
@@ -78,5 +90,6 @@
 * CONSTANS *
 ***********/
 #define PI           (float)(3.14159265358979323846)  /* pi */
+#define PI2           (float)(9.869604401)  /* pi squared */
 
 #endif // _CONFIG_H

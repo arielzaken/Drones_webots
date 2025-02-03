@@ -73,6 +73,9 @@
     <Filter Include="Header Files\Operator\Operator\Stabelizer">
       <UniqueIdentifier>{d3eff202-ee27-4657-802e-d5c1733372ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MissionManager">
+      <UniqueIdentifier>{3a87259f-0a87-4010-8fed-3f667839c85f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stabilizer.cpp">
